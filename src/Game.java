@@ -180,7 +180,12 @@ public class Game {
     }
 
     public void printSlotsInstructions() {
-        System.out.println("Welcome to " + ANSI_BLUE + "ɄⱠ₮ł₥₳₮Ɇ ₴ⱠØ₮₴" + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "  ________       .__       .___                _________      .__        \n" +
+                " /  _____/  ____ |  |    __| _/____   ____    /   _____/_____ |__| ____  \n" +
+                "/   \\  ___ /  _ \\|  |   / __ |/ __ \\ /    \\   \\_____  \\\\____ \\|  |/    \\ \n" +
+                "\\    \\_\\  (  <_> )  |__/ /_/ \\  ___/|   |  \\  /        \\  |_> >  |   |  \\\n" +
+                " \\______  /\\____/|____/\\____ |\\___  >___|  / /_______  /   __/|__|___|  /\n" +
+                "        \\/                  \\/    \\/     \\/          \\/|__|           \\/ " + ANSI_RESET);
         System.out.println("In this game, you'll spin three reels with different symbols.");
         System.out.println("If you combine the correct combinations, you get chips back!");
         System.out.println("If you win a reward, you will have a chance to play... Double or Nothing!");
