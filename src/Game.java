@@ -18,19 +18,23 @@ public class Game {
     public void startSlots() {
         Scanner scanner = new Scanner(System.in);
         printSlotsInstructions();
+        // List of slot possibilities, varying for each reel
         String[] slotSymbols1 = {"🍀", "💎", "💎", "💎", "🍇", "🍇", "🍋", "🥭", "🥭", "🥭", "🥭", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍊", "🍓", "🍓"};
         String[] slotSymbols2 = {"🍀", "💎", "💎", "🍇", "🍇", "🍋", "🍋", "🍋", "🍋", "🍋", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍊", "🍓", "🍓", "🍓", "🍓", "🍓", "🍓"};
         String[] slotSymbols3 = {"🍀", "💎", "🍇", "🍇", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍉", "🍉", "🍉", "🍉"};
         int numReels = 3;
+        // Addiction counters
         int roundCount = 0;
         int roundQuitPoint = (int)(Math.random() * 6) + 5;
         Random random = new Random();
         while (player.getPoints() > 0) {
+            // Get bet amount
             roundCount++;
             System.out.println("\nYour Chips: " + player.getPoints());
             System.out.print("How many chips do you want to bet? [1—3]: ");
             int betAmount = scanner.nextInt();
             scanner.nextLine();
+            // Validate bet amount
             while (betAmount > player.getPoints() || betAmount <= 0 || betAmount > 3) {
                 System.out.println("INVALID INPUT");
                 System.out.print("How many chips do you want to bet? [1—3]: ");
@@ -39,6 +43,7 @@ public class Game {
             }
             System.out.println("Spinning the reels 🎡");
             String[] reels1 = new String[numReels];
+            // Set each reel to a random symbol
             for (int i = 0; i < numReels; i++) {
                 reels1[i] = slotSymbols1[random.nextInt(slotSymbols1.length)];
             }
@@ -55,7 +60,9 @@ public class Game {
             System.out.println("   " + reels1[2] + " | " + reels2[2] + " | " + reels3[2]);
             int matchingSymbols = 1;
             int winnings = 0;
+            // Method to see if it wins any chips
             checkWinningCombination(betAmount, reels1, reels2, reels3);
+            // Play again option if not addicted yet
             if (roundCount <= roundQuitPoint && player.getPoints() > 0) {
                 System.out.print("Do you want to play again? [" + ANSI_GREEN + "yes" + ANSI_RESET + "/" + ANSI_RED + "no" + ANSI_RESET + "]: ");
                 String playAgain = scanner.nextLine().toLowerCase();
@@ -71,6 +78,7 @@ public class Game {
                 System.out.println(ANSI_BLUE + "You are addicted! You can't stop now!" + ANSI_RESET);
             }
         }
+        // End game
         if (player.getPoints() > 0) {
             System.out.println("You finished the slots game with " + player.getPoints() + " chips!");
         } else {
@@ -79,16 +87,19 @@ public class Game {
     }
 
     public static boolean allReelsMatch(String symbol, String[] reels1, String[] reels2, String[] reels3) {
+        // True or false if all reels match (Jackpot)
         return reels1[1].equals(symbol) && reels2[1].equals(symbol) && reels3[1].equals(symbol);
     }
 
     public static boolean twoReelsMatch(String symbol1, String symbol2, String[] reels1, String[] reels2, String[] reels3) {
+        // True or false if 2 reels match
         return (reels1[1].equals(symbol1) && reels2[1].equals(symbol1) && reels3[1].equals(symbol2)) ||
                 (reels1[1].equals(symbol1) && reels2[1].equals(symbol2) && reels3[1].equals(symbol1)) ||
                 (reels1[1].equals(symbol2) && reels2[1].equals(symbol1) && reels3[1].equals(symbol1));
     }
 
     public static int calculateWinnings(int betAmount, int win1, int win2, int win3) {
+        // Either win 1x, 2x, or 3x based on betAmount
         if (betAmount == 1) {
             return win1;
         } else if (betAmount == 2) {
@@ -101,6 +112,7 @@ public class Game {
     public void checkWinningCombination(int betAmount, String[] reels1, String[] reels2, String[] reels3) {
         Scanner scanner = new Scanner(System.in);
         int winnings = 0;
+        // Winning possibilities and rewards
         if (allReelsMatch("🍀", reels1, reels2, reels3)) {
             winnings = calculateWinnings(betAmount, 200, 400, 600);
         } else if (allReelsMatch("💎", reels1, reels2, reels3)) {
@@ -134,6 +146,7 @@ public class Game {
         }
         String doubleOrNothing = "";
         if (winnings > 0) {
+            // Double or nothing
             System.out.print("Would you like to Double or Nothing " + winnings + " chips? (" + (2 * winnings) + ") [" + ANSI_GREEN + "yes" + ANSI_RESET + "/" + ANSI_RED + "no" + ANSI_RESET + "]: ");
             doubleOrNothing = scanner.nextLine().toLowerCase();
             while (!doubleOrNothing.equals("yes") && !doubleOrNothing.equals("no")) {
@@ -143,6 +156,7 @@ public class Game {
             }
             boolean playerWinsDouble = false;
             if (doubleOrNothing.equals("yes")) {
+                // Get betType (even odd red black)
                 System.out.print(ANSI_YELLOW + "Golden Spin 🌟" + ANSI_RESET + "! Bet on [even/odd/red/black]: ");
                 String betType = scanner.nextLine().toLowerCase();
                 while (!betType.equals("even") && !betType.equals("odd") && !betType.equals("red") && !betType.equals("black") && !betType.equals("gamerhacker69")) {
@@ -150,8 +164,10 @@ public class Game {
                     System.out.print("Bet on [even/odd/red/black]: ");
                     betType = scanner.nextLine().toLowerCase();
                 }
+                // Deal a card from the deck
                 Card card = deck.deal();
                 System.out.println("Card Drawn: " + card);
+                // Method to check if the betType equals the cardType
                 playerWinsDouble = checkIfPlayerWins(betType, card);
                 if (playerWinsDouble) {
                     System.out.println("You doubled your reward and earned " + (2 * winnings) + " chips!");
@@ -170,6 +186,7 @@ public class Game {
     }
 
     private boolean checkIfPlayerWins(String betType, Card card) {
+        // Switch case to see if the betType equals the cardType (basically a simplified version of if/else)
         return switch (betType.toLowerCase()) {
             case "even" -> card.getValue() % 2 == 0;
             case "odd" -> card.getValue() % 2 == 1;
@@ -180,6 +197,7 @@ public class Game {
     }
 
     public void printSlotsInstructions() {
+        // Logo & instructions
         System.out.println(ANSI_BLUE + "  ________       .__       .___                _________      .__        \n" +
                 " /  _____/  ____ |  |    __| _/____   ____    /   _____/_____ |__| ____  \n" +
                 "/   \\  ___ /  _ \\|  |   / __ |/ __ \\ /    \\   \\_____  \\\\____ \\|  |/    \\ \n" +
@@ -197,6 +215,7 @@ public class Game {
     }
 
     public void clearScreen() {
+        // Clears the screen by printing a bunch of empty rows
         for (int i = 0; i < 30; i++) {
             System.out.println();
         }
