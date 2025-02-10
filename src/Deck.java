@@ -3,13 +3,15 @@ import java.util.ArrayList;
 public class Deck {
     private ArrayList<Card> cards;
     private int cardsLeft;
+    GameView window;
 
-    public Deck(String[] ranks, String[] suits, int[] values, String[] designs) {
+    public Deck(String[] ranks, String[] suits, int[] values, String[] designs, GameView window) {
         cards = new ArrayList<>();
+        this.window = window;
         for (int i = 0; i < suits.length; i++) {
             for (int j = 0; j < ranks.length; j++) {
                 int designIndex = i * ranks.length + j;
-                cards.add(new Card(ranks[j], suits[i], values[j], designs[designIndex])); //fix this later
+                cards.add(new Card(ranks[j], suits[i], values[j], designs[designIndex], window));
             }
         }
         cardsLeft = cards.size();
