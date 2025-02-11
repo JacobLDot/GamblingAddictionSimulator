@@ -6,9 +6,10 @@ public class GameView extends JFrame {
     private Image rouletteTableImage;
     private Image[] slotsImages;
     private Image[] cardsImages;
-    private final int WINDOW_WIDTH = 1024;
-    private final int WINDOW_HEIGHT = 768;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final int TILE_BAR_HEIGHT = 23;
+    private final int WINDOW_WIDTH = (int)screenSize.getWidth();
+    private final int WINDOW_HEIGHT = (int)screenSize.getHeight() - TILE_BAR_HEIGHT;
     private Game game;
 
     public GameView(Game game) {
@@ -17,9 +18,9 @@ public class GameView extends JFrame {
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("「Golden Spin」");
-        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        this.setSize(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
-
         this.setVisible(true);
     }
 
@@ -47,10 +48,31 @@ public class GameView extends JFrame {
         }
     }
 
+    private void drawInstructions(Graphics g) {
+        String instructionText = getInstructions();
+        g.setFont(new Font("DialogInput", Font.PLAIN, 14));
+        g.setColor(Color.BLACK);
+        int yPos = 75;
+        for (String line : instructionText.split("\n")) {
+            g.drawString(line, 75, yPos);
+            yPos += 20;
+        }
+    }
+
+    private String getInstructions() {
+        return "Welcome to Golden Spin\n" + "In this game, you'll spin three reels with different symbols.\n" + "If you combine the correct combinations, you get chips back!\n" + "If you win a reward, you will have a chance to play... Double or Nothing!\n" + "Make sure to not gamble too much though, you will become addicted!\n" + "Press ENTER to continue...";
+    }
+
     public void paint(Graphics g) {
-        g.drawImage(rouletteTableImage, 0, 0, 1024, 768, this);
-        game.getCard().draw(g);
-        g.drawImage(cardsImages[3], 100, 100, 300, 300, this);
+        if(game.getFinishedInstructions() == true) {
+            g.drawImage(rouletteTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
+        } else {
+            drawInstructions(g);
+        }
+        Card card = game.getCard();
+        if (card != null) {
+            card.draw(g);
+        }
     }
 
     public Image getSlotsTableImage() {

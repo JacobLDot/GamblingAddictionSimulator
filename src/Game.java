@@ -16,13 +16,14 @@ public class Game {
     private String[] suits;
     private int[] values;
     private String[] designs;
-    Card card;
+    private Card card;
+    private boolean finishedInstructions;
 
     public Game() {
-        String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-        String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
-        int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        String[] designs = {
+        ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        suits = new String[]{"Clubs", "Diamonds", "Hearts", "Spades"};
+        values = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        designs = new String[]{
                 "+-----+\n|A    |\n|  ♣  |\n|    A|\n+-----+",
                 "+-----+\n|2    |\n|  ♣  |\n|    2|\n+-----+",
                 "+-----+\n|3    |\n|  ♣  |\n|    3|\n+-----+",
@@ -71,7 +72,9 @@ public class Game {
 
     public void startSlots() {
         Scanner scanner = new Scanner(System.in);
+        window.repaint();
         printSlotsInstructions();
+        finishedInstructions = true;
         String[] slotSymbols1 = {"🍀", "💎", "💎", "💎", "🍇", "🍇", "🍋", "🥭", "🥭", "🥭", "🥭", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍊", "🍓", "🍓"};
         String[] slotSymbols2 = {"🍀", "💎", "💎", "🍇", "🍇", "🍋", "🍋", "🍋", "🍋", "🍋", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍊", "🍓", "🍓", "🍓", "🍓", "🍓", "🍓"};
         String[] slotSymbols3 = {"🍀", "💎", "🍇", "🍇", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍉", "🍉", "🍉", "🍉"};
@@ -80,6 +83,7 @@ public class Game {
         int roundQuitPoint = (int)(Math.random() * 6) + 5;
         Random random = new Random();
         while (player.getPoints() > 0) {
+            clearCard();
             window.repaint();
             roundCount++;
             System.out.println("\nYour Chips: " + player.getPoints());
@@ -204,6 +208,7 @@ public class Game {
                     betType = scanner.nextLine().toLowerCase();
                 }
                 card = deck.deal();
+                window.repaint();
                 System.out.println("Card Drawn: " + card);
                 playerWinsDouble = checkIfPlayerWins(betType, card);
                 if (playerWinsDouble) {
@@ -226,6 +231,10 @@ public class Game {
         return card;
     }
 
+    public void clearCard() {
+        this.card = null;
+    }
+
     private boolean checkIfPlayerWins(String betType, Card card) {
         return switch (betType.toLowerCase()) {
             case "even" -> card.getValue() % 2 == 0;
@@ -237,6 +246,7 @@ public class Game {
     }
 
     public void printSlotsInstructions() {
+        window.repaint();
         System.out.println(ANSI_BLUE + "  ________       .__       .___                _________      .__        \n" +
                 " /  _____/  ____ |  |    __| _/____   ____    /   _____/_____ |__| ____  \n" +
                 "/   \\  ___ /  _ \\|  |   / __ |/ __ \\ /    \\   \\_____  \\\\____ \\|  |/    \\ \n" +
@@ -251,6 +261,10 @@ public class Game {
         System.out.print(ANSI_GREEN + "PRESS ENTER TO CONTINUE:" + ANSI_RESET);
         scanner.nextLine();
         clearScreen();
+    }
+
+    public boolean getFinishedInstructions() {
+        return finishedInstructions;
     }
 
     public void clearScreen() {
