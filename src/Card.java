@@ -29,7 +29,7 @@ public class Card {
         if (suit.equals("Clubs")) {
             g.drawImage(cardsImages[value - 1], 300, 165, 120, 120, window);
         } else if (suit.equals("Diamonds")) {
-            g.drawImage(cardsImages[value + 9], 300, 165, 230, 230, window);
+            g.drawImage(cardsImages[value + 9], 300, 165, 120, 120, window);
         } else if (suit.equals("Hearts")) {
             g.drawImage(cardsImages[value + 19], 300, 165, 120, 120, window);
         } else {

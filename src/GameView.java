@@ -30,9 +30,9 @@ public class GameView extends JFrame {
         slotsImages = new Image[11];
         cardsImages = new Image[40];
 
-        String[] slotNames = {"Clover", "Diamond", "Grape", "Lemon", "Mango", "Orange", "Strawberry", "Watermelon"};
+        String[] slotNames = {"clover", "diamond", "grape", "lemon", "mango", "orange", "strawberry", "watermelon"};
         for (int i = 0; i< slotNames.length; i++) {
-            slotsImages[i+1] = new ImageIcon("Resources/Slots/" + slotNames[i] + ".jpg").getImage();
+            slotsImages[i] = new ImageIcon("Resources/Slots/" + slotNames[i] + ".jpg").getImage();
         }
 
         String[] suits = {"C", "D", "H", "S"};
@@ -41,7 +41,7 @@ public class GameView extends JFrame {
         for (String suit : suits) {
             for (String rank : ranks) {
                 if (index < cardsImages.length) {
-                    cardsImages[index] = new ImageIcon("Resources/" + suit + rank + ".png").getImage();
+                    cardsImages[index] = new ImageIcon("Resources/Cards/" + suit + rank + ".png").getImage();
                     index++;
                 }
             }
@@ -65,21 +65,24 @@ public class GameView extends JFrame {
 
     public void paint(Graphics g) {
         if(game.getFinishedInstructions() == true) {
-            g.drawImage(rouletteTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
+            if (game.getPlayingSlots()) {
+                g.drawImage(slotsTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
+            } else {
+                g.drawImage(rouletteTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
+            }
         } else {
             drawInstructions(g);
         }
-
-        Card card = game.getCard();
-        if (card != null) {
-            card.draw(g);
-        }
-
-        for (int i = 0; i < game.getBoard().length; i++) {
-            for (int j = 0; j < game.getBoard().length; j++) {
-                if (game.getBoard()[i][j] != null) {
-                    game.getBoard()[i][j].draw(g);
-                }
+        if (!game.getPlayingSlots()) {
+            Card card = game.getCard();
+            if (card != null) {
+                card.draw(g);
+            }
+        } else if (game.getPlayingSlots()) {
+            for (int i = 0; i < game.getBoard().length; i++) {
+                    if (game.getBoard()[i] != null) {
+                        game.getBoard()[i].draw(g);
+                    }
             }
         }
     }

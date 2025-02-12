@@ -17,7 +17,8 @@ public class Game {
     private int[] values;
     private String[] designs;
     private Card card;
-    private Slot board[][];
+    private Slot board[];
+    private boolean playingSlots;
     private boolean finishedInstructions;
 
     public Game() {
@@ -68,7 +69,7 @@ public class Game {
         };
         window = new GameView(this);
         this.deck = new Deck(ranks, suits, values, designs, window);
-        this.board = new Slot[3][3];
+        this.board = new Slot[3];
         this.player = new Player("Player 1");
     }
 
@@ -86,6 +87,7 @@ public class Game {
         Random random = new Random();
         while (player.getPoints() > 0) {
             clearCard();
+            playingSlots = true;
             window.repaint();
             roundCount++;
             System.out.println("\nYour Chips: " + player.getPoints());
@@ -102,24 +104,18 @@ public class Game {
             String[] reels1 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels1[i] = slotSymbols1[random.nextInt(slotSymbols1.length)];
-                board[0][i] = new Slot(reels1[i], window);
+                board[0] = new Slot(reels1[1], window, 120, 165);
             }
             String[] reels2 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels2[i] = slotSymbols2[random.nextInt(slotSymbols2.length)];
-                board[1][i] = new Slot(reels2[i], window);
+                board[1] = new Slot(reels2[1], window, 300, 165);
             }
             String[] reels3 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels3[i] = slotSymbols3[random.nextInt(slotSymbols3.length)];
-                board[2][i] = new Slot(reels3[i], window);
+                board[2] = new Slot(reels3[1], window, 480, 165);
             }
-            for(int i = 0; i < 3; i++) {
-                for (int j =0; j < 3; j++) {
-                    System.out.println(board[i][j]);
-                }
-            }
-            window.revalidate();
             window.repaint();
             System.out.println("   " + reels1[0] + " | " + reels2[0] + " | " + reels3[0]);
             System.out.println("—> " + ANSI_GREEN + reels1[1] + " | " + reels2[1] + " | " + reels3[1] + ANSI_RESET + " <—");
@@ -138,6 +134,11 @@ public class Game {
                 }
             } else {
                 System.out.println(ANSI_BLUE + "You are addicted! You can't stop now!" + ANSI_RESET);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         if (player.getPoints() > 0) {
@@ -212,6 +213,8 @@ public class Game {
             }
             boolean playerWinsDouble = false;
             if (doubleOrNothing.equals("yes")) {
+                playingSlots = false;
+                window.repaint();
                 System.out.print(ANSI_YELLOW + "Golden Spin 🌟" + ANSI_RESET + "! Bet on [even/odd/red/black]: ");
                 String betType = scanner.nextLine().toLowerCase();
                 while (!betType.equals("even") && !betType.equals("odd") && !betType.equals("red") && !betType.equals("black") && !betType.equals("gamerhacker69")) {
@@ -247,8 +250,12 @@ public class Game {
         this.card = null;
     }
 
-    public Slot[][] getBoard() {
+    public Slot[] getBoard() {
         return board;
+    }
+
+    public boolean getPlayingSlots() {
+        return playingSlots;
     }
 
     private boolean checkIfPlayerWins(String betType, Card card) {
