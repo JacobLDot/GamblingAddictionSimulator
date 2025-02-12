@@ -29,7 +29,7 @@ public class GameView extends JFrame {
     private void loadImages() {
         slotsTableImage = new ImageIcon("Resources/Backgrounds/Slots.png").getImage();
         rouletteTableImage = new ImageIcon("Resources/Backgrounds/Roulette.jpg").getImage();
-        instructionsImage = new ImageIcon("Resources/Backgrounds/Instructions.jpg").getImage();
+        instructionsImage = new ImageIcon("Resources/Backgrounds/Instructions.png").getImage();
         slotsImages = new Image[11];
         cardsImages = new Image[40];
 
@@ -51,21 +51,6 @@ public class GameView extends JFrame {
         }
     }
 
-    private void drawInstructions(Graphics g) {
-        String instructionText = getInstructions();
-        g.setFont(new Font("DialogInput", Font.PLAIN, 14));
-        g.setColor(Color.WHITE);
-        int yPos = 75;
-        for (String line : instructionText.split("\n")) {
-            g.drawString(line, 75, yPos);
-            yPos += 20;
-        }
-    }
-
-    private String getInstructions() {
-        return "Welcome to Golden Spin\n" + "In this game, you'll spin three reels with different symbols.\n" + "If you combine the correct combinations, you get chips back!\n" + "If you win a reward, you will have a chance to play... Double or Nothing!\n" + "Make sure to not gamble too much though, you will become addicted!\n" + "Press ENTER to continue...";
-    }
-
     public void paint(Graphics g) {
         if(game.getFinishedInstructions() == true) {
             if (game.getPlayingSlots()) {
@@ -75,7 +60,6 @@ public class GameView extends JFrame {
             }
         } else {
             g.drawImage(instructionsImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
-            drawInstructions(g);
         }
         if (!game.getPlayingSlots()) {
             Card card = game.getCard();
