@@ -87,6 +87,7 @@ public class Game {
         Random random = new Random();
         while (player.getPoints() > 0) {
             clearCard();
+            clearBoard();
             playingSlots = true;
             window.repaint();
             roundCount++;
@@ -252,6 +253,10 @@ public class Game {
 
     public Slot[] getBoard() {
         return board;
+    }
+
+    public void clearBoard() {
+        this.board = null;
     }
 
     public boolean getPlayingSlots() {
