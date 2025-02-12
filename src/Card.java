@@ -6,7 +6,6 @@ public class Card {
     private int value;
     private String design;
     private GameView window;
-    private Image[] slotsImages;
     private Image[] cardsImages;
 
     public Card(String rank, String suit, int value, String design, GameView window) {
@@ -15,7 +14,6 @@ public class Card {
         this.value = value;
         this.design = design;
         this.window = window;
-        slotsImages = window.getSlotsImages();
         cardsImages = window.getCardsImages();
     }
 

@@ -25,14 +25,14 @@ public class GameView extends JFrame {
     }
 
     private void loadImages() {
-        slotsTableImage = new ImageIcon("Resources/Slots.png").getImage();
-        rouletteTableImage = new ImageIcon("Resources/Roulette.png").getImage();
+        slotsTableImage = new ImageIcon("Resources/Backgrounds/Slots.png").getImage();
+        rouletteTableImage = new ImageIcon("Resources/Backgrounds/Roulette.png").getImage();
         slotsImages = new Image[11];
         cardsImages = new Image[40];
 
         String[] slotNames = {"Clover", "Diamond", "Grape", "Lemon", "Mango", "Orange", "Strawberry", "Watermelon"};
         for (int i = 0; i< slotNames.length; i++) {
-            slotsImages[i+1] = new ImageIcon("Resources/" + slotNames[i] + ".png").getImage();
+            slotsImages[i+1] = new ImageIcon("Resources/Slots/" + slotNames[i] + ".jpg").getImage();
         }
 
         String[] suits = {"C", "D", "H", "S"};
@@ -69,9 +69,18 @@ public class GameView extends JFrame {
         } else {
             drawInstructions(g);
         }
+
         Card card = game.getCard();
         if (card != null) {
             card.draw(g);
+        }
+
+        for (int i = 0; i < game.getBoard().length; i++) {
+            for (int j = 0; j < game.getBoard().length; j++) {
+                if (game.getBoard()[i][j] != null) {
+                    game.getBoard()[i][j].draw(g);
+                }
+            }
         }
     }
 

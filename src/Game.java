@@ -17,6 +17,7 @@ public class Game {
     private int[] values;
     private String[] designs;
     private Card card;
+    private Slot board[][];
     private boolean finishedInstructions;
 
     public Game() {
@@ -67,6 +68,7 @@ public class Game {
         };
         window = new GameView(this);
         this.deck = new Deck(ranks, suits, values, designs, window);
+        this.board = new Slot[3][3];
         this.player = new Player("Player 1");
     }
 
@@ -100,15 +102,25 @@ public class Game {
             String[] reels1 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels1[i] = slotSymbols1[random.nextInt(slotSymbols1.length)];
+                board[0][i] = new Slot(reels1[i], window);
             }
             String[] reels2 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels2[i] = slotSymbols2[random.nextInt(slotSymbols2.length)];
+                board[1][i] = new Slot(reels2[i], window);
             }
             String[] reels3 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels3[i] = slotSymbols3[random.nextInt(slotSymbols3.length)];
+                board[2][i] = new Slot(reels3[i], window);
             }
+            for(int i = 0; i < 3; i++) {
+                for (int j =0; j < 3; j++) {
+                    System.out.println(board[i][j]);
+                }
+            }
+            window.revalidate();
+            window.repaint();
             System.out.println("   " + reels1[0] + " | " + reels2[0] + " | " + reels3[0]);
             System.out.println("—> " + ANSI_GREEN + reels1[1] + " | " + reels2[1] + " | " + reels3[1] + ANSI_RESET + " <—");
             System.out.println("   " + reels1[2] + " | " + reels2[2] + " | " + reels3[2]);
@@ -233,6 +245,10 @@ public class Game {
 
     public void clearCard() {
         this.card = null;
+    }
+
+    public Slot[][] getBoard() {
+        return board;
     }
 
     private boolean checkIfPlayerWins(String betType, Card card) {
