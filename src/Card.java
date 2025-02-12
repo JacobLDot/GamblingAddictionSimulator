@@ -27,13 +27,49 @@ public class Card {
 
     public void draw(Graphics g) {
         if (suit.equals("Clubs")) {
-            g.drawImage(cardsImages[value - 1], 300, 165, 120, 120, window);
+            for (int i = 0; i < 60; i++) {
+                g.drawImage(cardsImages[value - 1], 360-i, 250-i, i*2, i*2, window);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+//          g.drawImage(cardsImages[value - 1], 300, 165, 120, 120, window);
         } else if (suit.equals("Diamonds")) {
-            g.drawImage(cardsImages[value + 9], 300, 165, 120, 120, window);
+            for (int i = 0; i < 60; i++) {
+                g.drawImage(cardsImages[value + 9], 360-i, 250-i, i*2, i*2, window);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+//          g.drawImage(cardsImages[value + 9], 300, 165, 120, 120, window);
         } else if (suit.equals("Hearts")) {
-            g.drawImage(cardsImages[value + 19], 300, 165, 120, 120, window);
+            for (int i = 0; i < 60; i++) {
+                g.drawImage(cardsImages[value + 19], 360-i, 250-i, i*2, i*2, window);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+//          g.drawImage(cardsImages[value + 19], 300, 165, 120, 120, window);
         } else {
-            g.drawImage(cardsImages[value + 29], 300, 165, 120, 120, window);
+            for (int i = 0; i < 60; i++) {
+                g.drawImage(cardsImages[value + 29], 360-i, 250-i, i*2, i*2, window);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+//          g.drawImage(cardsImages[value + 29], 300, 165, 120, 120, window);
         }
     }
+//    360, 214, 1, 1
+//    359, 213, 2, 2
+//    358, 212, 3, 3
+//    357, 212, 4, 4
 }

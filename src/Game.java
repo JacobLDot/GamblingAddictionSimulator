@@ -1,5 +1,3 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -105,17 +103,17 @@ public class Game {
             String[] reels1 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels1[i] = slotSymbols1[random.nextInt(slotSymbols1.length)];
-                board[0] = new Slot(reels1[1], window, 120, 165);
+                board[0] = new Slot(reels1[1], window, 245, 170);
             }
             String[] reels2 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels2[i] = slotSymbols2[random.nextInt(slotSymbols2.length)];
-                board[1] = new Slot(reels2[1], window, 300, 165);
+                board[1] = new Slot(reels2[1], window, 325, 170);
             }
             String[] reels3 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels3[i] = slotSymbols3[random.nextInt(slotSymbols3.length)];
-                board[2] = new Slot(reels3[1], window, 480, 165);
+                board[2] = new Slot(reels3[1], window, 405, 170);
             }
             window.repaint();
             System.out.println("   " + reels1[0] + " | " + reels2[0] + " | " + reels3[0]);
@@ -256,7 +254,9 @@ public class Game {
     }
 
     public void clearBoard() {
-        this.board = null;
+        for (int i = 0; i < 3 ; i++) {
+            board[i] = null;
+        }
     }
 
     public boolean getPlayingSlots() {
@@ -293,6 +293,11 @@ public class Game {
 
     public boolean getFinishedInstructions() {
         return finishedInstructions;
+    }
+
+    public void setFinishedInstructions() {
+        finishedInstructions = true;
+        playingSlots = true;
     }
 
     public void clearScreen() {

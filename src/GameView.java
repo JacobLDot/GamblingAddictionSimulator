@@ -4,6 +4,7 @@ import java.awt.*;
 public class GameView extends JFrame {
     private Image slotsTableImage;
     private Image rouletteTableImage;
+    private Image instructionsImage;
     private Image[] slotsImages;
     private Image[] cardsImages;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -21,12 +22,14 @@ public class GameView extends JFrame {
         this.setSize(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setLayout(null);
         this.setVisible(true);
     }
 
     private void loadImages() {
         slotsTableImage = new ImageIcon("Resources/Backgrounds/Slots.png").getImage();
-        rouletteTableImage = new ImageIcon("Resources/Backgrounds/Roulette.png").getImage();
+        rouletteTableImage = new ImageIcon("Resources/Backgrounds/Roulette.jpg").getImage();
+        instructionsImage = new ImageIcon("Resources/Backgrounds/Instructions.jpg").getImage();
         slotsImages = new Image[11];
         cardsImages = new Image[40];
 
@@ -51,7 +54,7 @@ public class GameView extends JFrame {
     private void drawInstructions(Graphics g) {
         String instructionText = getInstructions();
         g.setFont(new Font("DialogInput", Font.PLAIN, 14));
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         int yPos = 75;
         for (String line : instructionText.split("\n")) {
             g.drawString(line, 75, yPos);
@@ -71,6 +74,7 @@ public class GameView extends JFrame {
                 g.drawImage(rouletteTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
             }
         } else {
+            g.drawImage(instructionsImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
             drawInstructions(g);
         }
         if (!game.getPlayingSlots()) {

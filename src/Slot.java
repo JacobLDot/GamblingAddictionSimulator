@@ -17,7 +17,7 @@ public class Slot {
 
     public void draw(Graphics g) {
         int emojiIndex = getEmojiIndex(emoji);
-        g.drawImage(slotsImages[emojiIndex], xPos, yPos, 120, 120, window);
+        g.drawImage(slotsImages[emojiIndex], xPos, yPos, 70, 70, window);
     }
 
     public int getEmojiIndex(String emoji) {
