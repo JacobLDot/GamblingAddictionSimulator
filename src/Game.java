@@ -65,10 +65,10 @@ public class Game {
                 "+-----+\n|9    |\n|  ♠  |\n|    9|\n+-----+",
                 "+-----+\n|10   |\n|  ♠  |\n|   10|\n+-----+"
         };
-        window = new GameView(this);
-        this.deck = new Deck(ranks, suits, values, designs, window);
         this.board = new Slot[3];
         this.player = new Player("Player 1");
+        window = new GameView(this);
+        this.deck = new Deck(ranks, suits, values, designs, window);
     }
 
     public void startSlots() {
@@ -81,7 +81,7 @@ public class Game {
         String[] slotSymbols3 = {"🍀", "💎", "🍇", "🍇", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍉", "🍉", "🍉", "🍉"};
         int numReels = 3;
         int roundCount = 0;
-        int roundQuitPoint = (int)(Math.random() * 6) + 5;
+        int roundQuitPoint = (int)(Math.random() * 2) + 3;
         Random random = new Random();
         while (player.getPoints() > 0) {
             clearCard();
@@ -305,6 +305,10 @@ public class Game {
             System.out.println();
         }
         System.out.flush();
+    }
+
+    public int getPoints() {
+        return player.getPoints();
     }
 
     public static void main(String[] args) {

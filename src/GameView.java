@@ -1,5 +1,9 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameView extends JFrame {
     private Image slotsTableImage;
@@ -22,7 +26,6 @@ public class GameView extends JFrame {
         this.setSize(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setLayout(null);
         this.setVisible(true);
     }
 
@@ -55,8 +58,14 @@ public class GameView extends JFrame {
         if(game.getFinishedInstructions() == true) {
             if (game.getPlayingSlots()) {
                 g.drawImage(slotsTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
+                g.setFont(new Font("DialogInput", Font.BOLD, 14));
+                g.setColor(Color.WHITE);
+                g.drawString("Balance: $" + game.getPoints(), 250, 160);
             } else {
                 g.drawImage(rouletteTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
+                g.setFont(new Font("DialogInput", Font.BOLD, 14));
+                g.setColor(Color.WHITE);
+                g.drawString("Balance: $" + game.getPoints(), 250, 95);
             }
         } else {
             g.drawImage(instructionsImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
