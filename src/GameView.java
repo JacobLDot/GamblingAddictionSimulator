@@ -1,16 +1,10 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameView extends JFrame {
     private Image slotsTableImage;
     private Image rouletteTableImage;
     private Image instructionsImage;
-    private Image winImage;
-    private Image loseImage;
     private Image[] slotsImages;
     private Image[] cardsImages;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -35,8 +29,6 @@ public class GameView extends JFrame {
         slotsTableImage = new ImageIcon("Resources/Backgrounds/Slots.png").getImage();
         rouletteTableImage = new ImageIcon("Resources/Backgrounds/Roulette.jpg").getImage();
         instructionsImage = new ImageIcon("Resources/Backgrounds/Instructions.png").getImage();
-        winImage = new ImageIcon("Resources/Backgrounds/Win.png").getImage();
-        loseImage = new ImageIcon("Resources/Backgrounds/Lose.png").getImage();
         slotsImages = new Image[11];
         cardsImages = new Image[40];
 

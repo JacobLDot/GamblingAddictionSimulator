@@ -89,6 +89,7 @@ public class Game {
             clearCard();
             clearBoard();
             playingSlots = true;
+            doubleOrNothing = "";
             window.repaint();
             roundCount++;
             System.out.println("\nYour Chips: " + player.getPoints());
@@ -101,7 +102,6 @@ public class Game {
                 betAmount = scanner.nextInt();
                 scanner.nextLine();
             }
-            System.out.println("Spinning the reels 🎡");
             String[] reels1 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels1[i] = slotSymbols1[random.nextInt(slotSymbols1.length)];
@@ -239,12 +239,37 @@ public class Game {
                     player.addPoints(-betAmount);
                 }
             } if (doubleOrNothing.equals("no")) {
-                System.out.println("You walked away from doubling your chips, leaving with " + winnings + " chips.");
+                System.out.println("You left with " + winnings + " chips.");
                 player.addPoints(winnings - betAmount);
             }
         } else {
             player.addPoints(winnings - betAmount);
         }
+    }
+
+    private boolean checkIfPlayerWins(String betType, Card card) {
+        return switch (betType.toLowerCase()) {
+            case "even" -> card.getValue() % 2 == 0;
+            case "odd" -> card.getValue() % 2 == 1;
+            case "red" -> card.getSuit().equals("Hearts") || card.getSuit().equals("Diamonds");
+            case "black" -> card.getSuit().equals("Clubs") || card.getSuit().equals("Spades");
+            default -> false;
+        };
+    }
+
+    public void printSlotsInstructions() {
+        window.repaint();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(ANSI_GREEN + "PRESS ENTER TO CONTINUE:" + ANSI_RESET);
+        scanner.nextLine();
+    }
+
+    public int getPoints() {
+        return player.getPoints();
+    }
+
+    public boolean getFinishedInstructions() {
+        return finishedInstructions;
     }
 
     public Card getCard() {
@@ -267,49 +292,6 @@ public class Game {
 
     public boolean getPlayingSlots() {
         return playingSlots;
-    }
-
-    private boolean checkIfPlayerWins(String betType, Card card) {
-        return switch (betType.toLowerCase()) {
-            case "even" -> card.getValue() % 2 == 0;
-            case "odd" -> card.getValue() % 2 == 1;
-            case "red" -> card.getSuit().equals("Hearts") || card.getSuit().equals("Diamonds");
-            case "black" -> card.getSuit().equals("Clubs") || card.getSuit().equals("Spades");
-            default -> false;
-        };
-    }
-
-    public void printSlotsInstructions() {
-        window.repaint();
-        System.out.println(ANSI_BLUE + "  ________       .__       .___                _________      .__        \n" +
-                " /  _____/  ____ |  |    __| _/____   ____    /   _____/_____ |__| ____  \n" +
-                "/   \\  ___ /  _ \\|  |   / __ |/ __ \\ /    \\   \\_____  \\\\____ \\|  |/    \\ \n" +
-                "\\    \\_\\  (  <_> )  |__/ /_/ \\  ___/|   |  \\  /        \\  |_> >  |   |  \\\n" +
-                " \\______  /\\____/|____/\\____ |\\___  >___|  / /_______  /   __/|__|___|  /\n" +
-                "        \\/                  \\/    \\/     \\/          \\/|__|           \\/ " + ANSI_RESET);
-        System.out.println("In this game, you'll spin three reels with different symbols.");
-        System.out.println("If you combine the correct combinations, you get chips back!");
-        System.out.println("If you win a reward, you will have a chance to play... Double or Nothing!");
-        System.out.println("Make sure to not gamble too much though, you will become addicted!");
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(ANSI_GREEN + "PRESS ENTER TO CONTINUE:" + ANSI_RESET);
-        scanner.nextLine();
-        clearScreen();
-    }
-
-    public boolean getFinishedInstructions() {
-        return finishedInstructions;
-    }
-
-    public void clearScreen() {
-        for (int i = 0; i < 30; i++) {
-            System.out.println();
-        }
-        System.out.flush();
-    }
-
-    public int getPoints() {
-        return player.getPoints();
     }
 
     public static void main(String[] args) {

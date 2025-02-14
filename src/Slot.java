@@ -16,11 +16,11 @@ public class Slot {
     }
 
     public void draw(Graphics g) {
-        for(int i = 0 ; i < 25; i++) {
+        for(int i = 0 ; i < 50; i++) {
             int randomImage = (int)(Math.random()*8);
             g.drawImage(slotsImages[randomImage], xPos, yPos, 70, 70, window);
             try {
-                Thread.sleep(25 + i);
+                Thread.sleep(16);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
