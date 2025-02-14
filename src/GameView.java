@@ -9,6 +9,8 @@ public class GameView extends JFrame {
     private Image slotsTableImage;
     private Image rouletteTableImage;
     private Image instructionsImage;
+    private Image winImage;
+    private Image loseImage;
     private Image[] slotsImages;
     private Image[] cardsImages;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -33,6 +35,8 @@ public class GameView extends JFrame {
         slotsTableImage = new ImageIcon("Resources/Backgrounds/Slots.png").getImage();
         rouletteTableImage = new ImageIcon("Resources/Backgrounds/Roulette.jpg").getImage();
         instructionsImage = new ImageIcon("Resources/Backgrounds/Instructions.png").getImage();
+        winImage = new ImageIcon("Resources/Backgrounds/Win.png").getImage();
+        loseImage = new ImageIcon("Resources/Backgrounds/Lose.png").getImage();
         slotsImages = new Image[11];
         cardsImages = new Image[40];
 
@@ -55,7 +59,7 @@ public class GameView extends JFrame {
     }
 
     public void paint(Graphics g) {
-        if(game.getFinishedInstructions() == true) {
+        if(game.getFinishedInstructions()) {
             if (game.getPlayingSlots()) {
                 g.drawImage(slotsTableImage, 0, 23, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, this);
                 g.setFont(new Font("DialogInput", Font.BOLD, 14));

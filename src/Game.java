@@ -16,8 +16,10 @@ public class Game {
     private String[] designs;
     private Card card;
     private Slot board[];
+    private String doubleOrNothing;
     private boolean playingSlots;
     private boolean finishedInstructions;
+    private int winnings;
 
     public Game() {
         ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
@@ -90,12 +92,12 @@ public class Game {
             window.repaint();
             roundCount++;
             System.out.println("\nYour Chips: " + player.getPoints());
-            System.out.print("How many chips do you want to bet? [1—3]: ");
+            System.out.print("How many chips do you want to bet? [1—3 or 10 or ALL]: ");
             int betAmount = scanner.nextInt();
             scanner.nextLine();
-            while (betAmount > player.getPoints() || betAmount <= 0 || betAmount > 3) {
+            while (betAmount > player.getPoints() || betAmount <= 0 || betAmount > 3 && betAmount != 10 && betAmount != player.getPoints()) {
                 System.out.println("INVALID INPUT");
-                System.out.print("How many chips do you want to bet? [1—3]: ");
+                System.out.print("How many chips do you want to bet? [1—3 or 10 or ALL]: ");
                 betAmount = scanner.nextInt();
                 scanner.nextLine();
             }
@@ -116,9 +118,6 @@ public class Game {
                 board[2] = new Slot(reels3[1], window, 405, 170);
             }
             window.repaint();
-            System.out.println("   " + reels1[0] + " | " + reels2[0] + " | " + reels3[0]);
-            System.out.println("—> " + ANSI_GREEN + reels1[1] + " | " + reels2[1] + " | " + reels3[1] + ANSI_RESET + " <—");
-            System.out.println("   " + reels1[2] + " | " + reels2[2] + " | " + reels3[2]);
             checkWinningCombination(betAmount, reels1, reels2, reels3);
             if (roundCount <= roundQuitPoint && player.getPoints() > 0) {
                 System.out.print("Do you want to play again? [" + ANSI_GREEN + "yes" + ANSI_RESET + "/" + ANSI_RED + "no" + ANSI_RESET + "]: ");
@@ -134,7 +133,11 @@ public class Game {
             } else {
                 System.out.println(ANSI_BLUE + "You are addicted! You can't stop now!" + ANSI_RESET);
                 try {
-                    Thread.sleep(2000);
+                    if(doubleOrNothing.equals("no")) {
+                        Thread.sleep(2000);
+                    } else {
+                        Thread.sleep(5000);
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -157,51 +160,54 @@ public class Game {
                 (reels1[1].equals(symbol2) && reels2[1].equals(symbol1) && reels3[1].equals(symbol1));
     }
 
-    public static int calculateWinnings(int betAmount, int win1, int win2, int win3) {
+    public static int calculateWinnings(int betAmount, int win1, int win2, int win3, int win10, int winALL) {
         if (betAmount == 1) {
             return win1;
         } else if (betAmount == 2) {
             return win2;
-        } else {
+        } else if (betAmount == 3) {
             return win3;
+        } else if (betAmount == 10) {
+            return win10;
+        } else {
+            return winALL;
         }
     }
 
     public void checkWinningCombination(int betAmount, String[] reels1, String[] reels2, String[] reels3) {
         Scanner scanner = new Scanner(System.in);
-        int winnings = 0;
+        winnings = 0;
         if (allReelsMatch("🍀", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 200, 400, 600);
+            winnings = calculateWinnings(betAmount, 200, 400, 600, 2000, player.getPoints() * 2);
         } else if (allReelsMatch("💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 100, 200, 300);
+            winnings = calculateWinnings(betAmount, 100, 200, 300, 1000, player.getPoints() * 2);
         } else if (allReelsMatch("🍇", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 100, 200, 300);
+            winnings = calculateWinnings(betAmount, 100, 200, 300, 1000, player.getPoints() * 2);
         } else if (allReelsMatch("🍋", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 18, 36, 54);
+            winnings = calculateWinnings(betAmount, 18, 36, 54, 180, player.getPoints() * 2);
         } else if (allReelsMatch("🥭", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 14, 28, 42);
+            winnings = calculateWinnings(betAmount, 14, 28, 42, 140, player.getPoints() * 2);
         } else if (allReelsMatch("🍊", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 10, 20, 30);
+            winnings = calculateWinnings(betAmount, 10, 20, 30, 100, player.getPoints() * 2);
         } else if (allReelsMatch("🍓", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 5, 10, 15);
+            winnings = calculateWinnings(betAmount, 5, 10, 15, 50, player.getPoints() * 2);
         } else if (twoReelsMatch("🍇", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 100, 200, 300);
+            winnings = calculateWinnings(betAmount, 100, 200, 300, 1000, player.getPoints() * 2);
         } else if (twoReelsMatch("🍋", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 18, 36, 54);
+            winnings = calculateWinnings(betAmount, 18, 36, 54, 180, player.getPoints() * 2);
         } else if (twoReelsMatch("🥭", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 14, 28, 42);
+            winnings = calculateWinnings(betAmount, 14, 28, 42, 140, player.getPoints() * 2);
         } else if (twoReelsMatch("🍊", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 10, 20, 30);
+            winnings = calculateWinnings(betAmount, 10, 20, 30, 100, player.getPoints() * 2);
         } else if ((reels1[1].equals(reels2[1]) && reels1[1].equals("🍓")) || (reels1[1].equals(reels3[1]) && (reels1[1].equals("🍓")) || (reels2[1].equals(reels3[1]) && (reels2[1].equals("🍓"))))) {
-            winnings = calculateWinnings(betAmount, 5, 10, 15);
+            winnings = calculateWinnings(betAmount, 5, 10, 15, 50, player.getPoints() * 2);
         } else if ((reels1[1].equals("🍓")) || reels2[1].equals("🍓") || reels3[1].equals("🍓")) {
-            winnings = calculateWinnings(betAmount, 2, 4, 6);
+            winnings = calculateWinnings(betAmount, 2, 4, 6, 20, player.getPoints() * 2);
         } if (winnings == 0) {
             System.out.println("No match. You win " + winnings + " chips!");
         } else {
             System.out.println("You win " + winnings + " chips!");
         }
-        String doubleOrNothing = "";
         if (winnings > 0) {
             System.out.print("Would you like to Double or Nothing " + winnings + " chips? (" + (2 * winnings) + ") [" + ANSI_GREEN + "yes" + ANSI_RESET + "/" + ANSI_RED + "no" + ANSI_RESET + "]: ");
             doubleOrNothing = scanner.nextLine().toLowerCase();
@@ -210,7 +216,7 @@ public class Game {
                 System.out.print("Would you like to Double or Nothing " + winnings + " chips? (" + (2 * winnings) + ") [" + ANSI_GREEN + "yes" + ANSI_RESET + "/" + ANSI_RED + "no" + ANSI_RESET + "]: ");
                 doubleOrNothing = scanner.nextLine().toLowerCase();
             }
-            boolean playerWinsDouble = false;
+            boolean playerWinsDouble;
             if (doubleOrNothing.equals("yes")) {
                 playingSlots = false;
                 window.repaint();
@@ -293,11 +299,6 @@ public class Game {
 
     public boolean getFinishedInstructions() {
         return finishedInstructions;
-    }
-
-    public void setFinishedInstructions() {
-        finishedInstructions = true;
-        playingSlots = true;
     }
 
     public void clearScreen() {
