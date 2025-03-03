@@ -16,6 +16,7 @@ public class Slot {
     }
 
     public void draw(Graphics g) {
+        // Loops through and draws random images
         for(int i = 0 ; i < 50; i++) {
             int randomImage = (int)(Math.random()*8);
             g.drawImage(slotsImages[randomImage], xPos, yPos, 70, 70, window);
@@ -25,6 +26,7 @@ public class Slot {
                 e.printStackTrace();
             }
         }
+        // Draws the correct image at the end
         int emojiIndex = getEmojiIndex(emoji);
         g.drawImage(slotsImages[emojiIndex], xPos, yPos, 70, 70, window);
     }

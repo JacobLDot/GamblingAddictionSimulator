@@ -26,6 +26,8 @@ public class Card {
     }
 
     public void draw(Graphics g) {
+        // Loops through 60 times with a 10 ms pause while redrawing images
+        // until it stops on the automatically generated and selected card.
         if (suit.equals("Clubs")) {
             for (int i = 0; i < 60; i++) {
                 g.drawImage(cardsImages[value - 1], 360-i, 250-i, i*2, i*2, window);

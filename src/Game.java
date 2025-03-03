@@ -29,6 +29,7 @@ public class Game {
     private final int STRAWBERRY = 5;
 
     public Game() {
+        // Define Arrays
         ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         suits = new String[]{"Clubs", "Diamonds", "Hearts", "Spades"};
         values = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -85,10 +86,12 @@ public class Game {
         window.repaint();
         printSlotsInstructions();
         finishedInstructions = true;
+        // Set Options for each Slot
         String[] slotSymbols1 = {"🍀", "💎", "💎", "💎", "🍇", "🍇", "🍋", "🥭", "🥭", "🥭", "🥭", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍊", "🍓", "🍓"};
         String[] slotSymbols2 = {"🍀", "💎", "💎", "🍇", "🍇", "🍋", "🍋", "🍋", "🍋", "🍋", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍊", "🍓", "🍓", "🍓", "🍓", "🍓", "🍓"};
         String[] slotSymbols3 = {"🍀", "💎", "🍇", "🍇", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🍋", "🥭", "🥭", "🥭", "🍊", "🍊", "🍊", "🍊", "🍉", "🍉", "🍉", "🍉"};
         int numReels = 3;
+        // For the loop system when the user gets addicted
         int roundCount = 0;
         int roundQuitPoint = (int)(Math.random() * 2) + 3;
         Random random = new Random();
@@ -99,6 +102,7 @@ public class Game {
             doubleOrNothing = "";
             window.repaint();
             roundCount++;
+            // Bet options
             System.out.println("\nYour Chips: " + player.getPoints());
             System.out.print("How many chips do you want to bet? [1—3 or 10 or ALL]: ");
             int betAmount = scanner.nextInt();
@@ -109,6 +113,7 @@ public class Game {
                 betAmount = scanner.nextInt();
                 scanner.nextLine();
             }
+            // Creating slots in locations for the spinning animation
             String[] reels1 = new String[numReels];
             for (int i = 0; i < numReels; i++) {
                 reels1[i] = slotSymbols1[random.nextInt(slotSymbols1.length)];
@@ -125,6 +130,7 @@ public class Game {
                 board[2] = new Slot(reels3[1], window, 405, 170);
             }
             window.repaint();
+            // Checks if the user wins or not along with how many they win
             checkWinningCombination(betAmount, reels1, reels2, reels3);
             if (roundCount <= roundQuitPoint && player.getPoints() > 0) {
                 System.out.print("Do you want to play again? [" + ANSI_GREEN + "yes" + ANSI_RESET + "/" + ANSI_RED + "no" + ANSI_RESET + "]: ");
@@ -138,6 +144,7 @@ public class Game {
                     break;
                 }
             } else {
+                // If addicted they cannot stop playing until they lose all their chips
                 System.out.println(ANSI_BLUE + "You are addicted! You can't stop now!" + ANSI_RESET);
                 try {
                     if(doubleOrNothing.equals("no")) {
@@ -157,16 +164,19 @@ public class Game {
         }
     }
 
+    // If all reels match
     public static boolean allReelsMatch(String symbol, String[] reels1, String[] reels2, String[] reels3) {
         return reels1[1].equals(symbol) && reels2[1].equals(symbol) && reels3[1].equals(symbol);
     }
 
+    // If two reels match
     public static boolean twoReelsMatch(String symbol1, String symbol2, String[] reels1, String[] reels2, String[] reels3) {
         return (reels1[1].equals(symbol1) && reels2[1].equals(symbol1) && reels3[1].equals(symbol2)) ||
                 (reels1[1].equals(symbol1) && reels2[1].equals(symbol2) && reels3[1].equals(symbol1)) ||
                 (reels1[1].equals(symbol2) && reels2[1].equals(symbol1) && reels3[1].equals(symbol1));
     }
 
+    // Return int based on their bet amount
     public static int calculateWinnings(int betAmount, int win1, int win2, int win3, int win10, int winALL) {
         if (betAmount == 1) {
             return win1;
@@ -181,6 +191,7 @@ public class Game {
         }
     }
 
+    // Formulas to determine winning chips
     public void checkWinningCombination(int betAmount, String[] reels1, String[] reels2, String[] reels3) {
         Scanner scanner = new Scanner(System.in);
         winnings = 0;
@@ -215,6 +226,7 @@ public class Game {
         } else {
             System.out.println("You win " + winnings + " chips!");
         }
+        // Option to double or nothing their winnings
         if (winnings > 0) {
             System.out.print("Would you like to Double or Nothing " + winnings + " chips? (" + (2 * winnings) + ") [" + ANSI_GREEN + "yes" + ANSI_RESET + "/" + ANSI_RED + "no" + ANSI_RESET + "]: ");
             doubleOrNothing = scanner.nextLine().toLowerCase();
@@ -254,6 +266,7 @@ public class Game {
         }
     }
 
+    // Check if player wins the double or nothing
     private boolean checkIfPlayerWins(String betType, Card card) {
         return switch (betType.toLowerCase()) {
             case "even" -> card.getValue() % 2 == 0;
@@ -264,6 +277,7 @@ public class Game {
         };
     }
 
+    // Game instructions on the screen, makes user press enter to continue
     public void printSlotsInstructions() {
         window.repaint();
         Scanner scanner = new Scanner(System.in);
