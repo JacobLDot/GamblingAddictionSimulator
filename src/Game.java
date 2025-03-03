@@ -20,6 +20,13 @@ public class Game {
     private boolean playingSlots;
     private boolean finishedInstructions;
     private int winnings;
+    private final int CLOVER = 200;
+    private final int DIAMOND = 100;
+    private final int GRAPE = 100;
+    private final int LEMON = 18;
+    private final int MANGO = 14;
+    private final int ORANGE = 10;
+    private final int STRAWBERRY = 5;
 
     public Game() {
         ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
@@ -178,29 +185,29 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         winnings = 0;
         if (allReelsMatch("🍀", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 200, 400, 600, 2000, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, CLOVER, CLOVER * 2, CLOVER * 3, CLOVER * 10, player.getPoints() * 7777777);
         } else if (allReelsMatch("💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 100, 200, 300, 1000, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, DIAMOND, DIAMOND * 2, DIAMOND * 3, DIAMOND * 10, player.getPoints() * 100);
         } else if (allReelsMatch("🍇", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 100, 200, 300, 1000, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, GRAPE, GRAPE * 2, GRAPE * 3, GRAPE * 10, player.getPoints() * 12);
         } else if (allReelsMatch("🍋", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 18, 36, 54, 180, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, LEMON, LEMON * 2, LEMON * 3, LEMON * 10, player.getPoints() * 11);
         } else if (allReelsMatch("🥭", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 14, 28, 42, 140, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, MANGO, MANGO * 2, MANGO * 3, MANGO * 10, player.getPoints() * 10);
         } else if (allReelsMatch("🍊", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 10, 20, 30, 100, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, ORANGE, ORANGE * 2, ORANGE * 3, ORANGE * 10, player.getPoints() * 9);
         } else if (allReelsMatch("🍓", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 5, 10, 15, 50, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, STRAWBERRY, STRAWBERRY * 2, STRAWBERRY * 3, STRAWBERRY * 10, player.getPoints() * 8);
         } else if (twoReelsMatch("🍇", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 100, 200, 300, 1000, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, GRAPE, GRAPE * 2, GRAPE * 3, GRAPE * 10, player.getPoints() * 7);
         } else if (twoReelsMatch("🍋", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 18, 36, 54, 180, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, LEMON, LEMON * 2, LEMON * 3, LEMON * 10, player.getPoints() * 6);
         } else if (twoReelsMatch("🥭", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 14, 28, 42, 140, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, MANGO, MANGO * 2, MANGO * 3, MANGO * 10, player.getPoints() * 5);
         } else if (twoReelsMatch("🍊", "💎", reels1, reels2, reels3)) {
-            winnings = calculateWinnings(betAmount, 10, 20, 30, 100, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, ORANGE, ORANGE * 2, ORANGE * 3,ORANGE * 10, player.getPoints() * 4);
         } else if ((reels1[1].equals(reels2[1]) && reels1[1].equals("🍓")) || (reels1[1].equals(reels3[1]) && (reels1[1].equals("🍓")) || (reels2[1].equals(reels3[1]) && (reels2[1].equals("🍓"))))) {
-            winnings = calculateWinnings(betAmount, 5, 10, 15, 50, player.getPoints() * 2);
+            winnings = calculateWinnings(betAmount, 5, 10, 15, 50, player.getPoints() * 3);
         } else if ((reels1[1].equals("🍓")) || reels2[1].equals("🍓") || reels3[1].equals("🍓")) {
             winnings = calculateWinnings(betAmount, 2, 4, 6, 20, player.getPoints() * 2);
         } if (winnings == 0) {

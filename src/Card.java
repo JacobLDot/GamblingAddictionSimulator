@@ -29,6 +29,7 @@ public class Card {
         if (suit.equals("Clubs")) {
             for (int i = 0; i < 60; i++) {
                 g.drawImage(cardsImages[value - 1], 360-i, 250-i, i*2, i*2, window);
+                // change
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
